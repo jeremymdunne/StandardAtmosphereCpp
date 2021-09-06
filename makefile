@@ -1,28 +1,31 @@
 SRC_DIR := src
 OBJ_DIR := obj
-BIN_DIR := .
+LIB_DIR	:= lib
 
-EXE := $(BIN_DIR)/parser
+SUBDIRS 	:= $(LIB_DIR)/StandardAtmosphere
+
+EXE := standardAtmo
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ := $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 CXX 			:= g++
-CPPFLAGS 	:= -Iinclude
 CXXFLAGS 	:= -Wall
-LDFLAGS 	:= -Llib
-LDLIBS 		:= -lm
 
-.PHONY: all clean
+.PHONY: all clean $(SUBDIRS)
 
-all: $(EXE)
+all: $(SUBDIRS) $(EXE)
 
-$(EXE): $(OBJ) | $(BIN_DIR)
-	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
+# main program
+$(EXE): $(OBJ_DIR)\main.o
+	$(CXX) $^ -L.\lib\StandardAtmosphere -lStandardAtmosphere -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+$(OBJ_DIR)\main.o: $(SRC_DIR)\main.cpp
+	$(CXX) $(CXXFLAGS) -c $^ -o $@
+
+$(SUBDIRS):
+	$(MAKE) -C $@
 
 clean:
-	@$(RM) -rv $(BIN_DIR) $(OBJ_DIR)
-
--include $(OBJ:.o=.d)
+	del -f *.o
+	del -f $(OBJ_DIR)\*.o
+	del -f $(EXE).exe

@@ -3,7 +3,8 @@
 #include <vector>
 #include <string>
 
-#include "CSVparser.hpp"
+
+#include "../lib/CSVParser/include/CSVParser.hpp"
 
 class StandardAtmosphere{
 

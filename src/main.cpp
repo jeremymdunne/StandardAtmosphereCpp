@@ -1,6 +1,9 @@
 #include <iostream>
 
-int main(int argc, char* argv[]){
+#include "../lib/StandardAtmosphere/include/StandardAtmosphere.hpp"
 
-  return 0; 
+int main(int argc, char* argv[]){
+  std::cout << "Hello, World! " << std::endl;
+  StandardAtmosphere atmo;
+  return 0;
 }

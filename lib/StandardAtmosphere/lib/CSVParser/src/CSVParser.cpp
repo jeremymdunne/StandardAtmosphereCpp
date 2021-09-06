@@ -38,9 +38,11 @@ void readCSV(std::ifstream* stream, std::vector<std::vector<std::string>>* data)
     std::vector<std::string> data_vec;
     while(stream->good()){
       std::getline(*stream, data_str);
-      splitDeliminator(&data_str, &data_vec);
-      data->push_back(data_vec);
-      data_vec.clear();
+      if(data_str != ""){
+        splitDeliminator(&data_str, &data_vec);
+        data->push_back(data_vec);
+        data_vec.clear();
+      }
     }
   }
 }
